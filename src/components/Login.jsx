@@ -9,6 +9,7 @@ export default function Login () {
 
     const [emailId, setEmailId] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const [error, setError] = React.useState('');
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -26,7 +27,8 @@ export default function Login () {
             }
 
         } catch(err){
-            console.log("Error: ",err)
+            setError(err?.response?.data || "Something went wrong");
+            console.log("Error: ",err.response)
         }
 
     }
@@ -67,7 +69,7 @@ export default function Login () {
                 <br/>At least one lowercase letter
                 <br/>At least one uppercase letter
                 </p>
-
+                <p className="text-red-500">{error}</p>
                 <div className="card-actions justify-center">
                     <button className="btn btn-primary" onClick={handleLogin}>Login</button>
                 </div>

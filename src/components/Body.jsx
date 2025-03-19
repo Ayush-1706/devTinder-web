@@ -27,7 +27,7 @@ export default function Body() {
 
     useEffect(() => {
         fetchUser();
-    })
+    }, [])
 
     return(
         <>

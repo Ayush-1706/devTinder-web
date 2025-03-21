@@ -68,7 +68,7 @@ const EditProfile = ({user}) => {
                 </fieldset>
             </div>
 
-            <UserCard user={{firstName, lastName, age, gender, photoUrl, about}}/>
+            <UserCard showBtn={false} user={{firstName, lastName, age, gender, photoUrl, about}}/>
             </div>
             <div className="toast toast-top toast-center">
             {showToast && <div className="alert alert-success">

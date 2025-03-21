@@ -53,8 +53,8 @@ const Request = () => {
                             {age && gender && <p>{age + ", " + gender}</p>}
                         </div>
                         <div>
-                            <button className="btn btn-primary mx-5" onClick={() => reviewRequests("accepted", data.fromUserId._id)}>Accept</button>
-                            <button className="btn btn-secondary mx-5" onClick={() => reviewRequests("rejected", data.fromUserId._id)}>Ignore</button>
+                            <button className="btn btn-primary mx-5" onClick={() => reviewRequests("rejected", data._id)}>Reject</button>
+                            <button className="btn btn-secondary mx-5" onClick={() => reviewRequests("accepted", data._id)}>Accept</button>
                         </div>
                     </div>
                 )

@@ -9,6 +9,9 @@ export default function Login () {
 
     const [emailId, setEmailId] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const [firstName, setFirstName] = React.useState('');
+    const [lastName, setLastName] = React.useState('');
+    const [isLoginForm, setIsLoginForm] = React.useState(true);
     const [error, setError] = React.useState('');
 
     const dispatch = useDispatch();
@@ -30,15 +33,46 @@ export default function Login () {
             setError(err?.response?.data || "Something went wrong");
             console.log("Error: ",err.response)
         }
+    }
 
+    const handleSignUp = async () => {
+        try{
+            const res = await axios.post(`${BASE_URL}/signup`, {firstName, lastName, emailId, password}, {withCredentials: true});
+            dispatch(addUser(res.data.data));
+            return navigate('/profile');
+        } catch(err){
+            console.log("Errpr: ", err);
+        }
     }
 
     return(
         <div className="flex justify-center my-10">
             <div className="card bg-base-300 w-96 shadow-xl">
             <div className="card-body">
-                <h2 className="card-title justify-center">Login</h2>
+                <h2 className="card-title justify-center">{isLoginForm ? "Login" : "Sign Up"} </h2>
                 <div>
+
+                {!isLoginForm && 
+                <>
+                    <label className="input validator">
+                    <input 
+                        type="text" 
+                        value={firstName}
+                        placeholder="John" 
+                        onChange={(e) => setFirstName(e.target.value)}
+                        required/>
+                    </label>
+
+                    <label className="input validator">
+                    <input 
+                        type="text" 
+                        value={lastName}
+                        placeholder="Doe" 
+                        onChange={(e) => setLastName(e.target.value)}
+                        required/>
+                    </label>
+                </>}
+
                 <label className="input validator">
                 <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2.5" fill="none" stroke="currentColor"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></g></svg>
                 <input 
@@ -71,8 +105,12 @@ export default function Login () {
                 </p>
                 <p className="text-red-500">{error}</p>
                 <div className="card-actions justify-center">
-                    <button className="btn btn-primary" onClick={handleLogin}>Login</button>
+                    <button className="btn btn-primary" onClick={isLoginForm ? handleLogin : handleSignUp}>{isLoginForm ? "Login" : "Sign Up"} </button>
                 </div>
+
+                <p className="m-auto cursor-pointer py-2" onClick={()  => setIsLoginForm(value => !value)}>
+                    {isLoginForm ? "New user ? Please sign up" : "Already have an account? Please login"}
+                </p>
             </div>
             </div>
         </div>
